@@ -1,0 +1,14 @@
+.post {
+    display: inline-block;
+    margin: 0 15px;
+    text-align: center;
+}
+
+
+.fav-icon {  
+    display: block;
+    background:url(https://image.flaticon.com/icons/svg/290/290413.svg) no-repeat;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}   
