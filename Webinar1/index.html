@@ -21,7 +21,47 @@
         <input type="text">
         <button type="submit">submit</button>
     </form>
+    
+    <template id="cats-cart-list">
+        {{#each cats}}
+        <li>
+            <h2>Name:{{name}} </h2>
+            <p>Age: {{age}}</p>
+            {{#if joyful}}
+            <p>Mood: 😊</p>
+            {{else}}
+            <p>Mood: ☹️</p>
+            {{/if}}
+            <ul>
+                {{#each traits}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/each}}
+    </template>
 
+    <template id="dish-card">
+        <div class="card">
+          <img class="img" src="{{image}}" alt="" width="200">
+          <div class="content">
+            <h2 class="name">{{name}}</h2>
+            <p class="descr">{{descr}}</p>
+            <footer class="footer">
+              <p class="price">Price: {{price}}$</p>
+              {{#if available}}
+              <button class="button">Add to order</button>
+              {{/if}}
+            </footer>
+    
+            {{#unless available}}
+            <p class="sold-out">Sold Out!</p>
+            {{/unless}}
+          </div>
+        </div>
+      </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="main.js"></script>
 </body>
 
