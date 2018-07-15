@@ -33,7 +33,7 @@ const VALIDATOR = {
             return acc;
         },{})
         const valid = Object.values(result).every(value => value);
-        return {valid, result, inputs}
+        return {valid, result}
     },
     isValid(patternKey, value){
         return this.patterns[patternKey].test(value)
