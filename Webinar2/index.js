@@ -36,6 +36,7 @@ const VALIDATOR = {
         return {valid, result}
     },
     isValid(patternKey, value){
+        console.log(this.patterns)
         return this.patterns[patternKey].test(value)
     }
 }
