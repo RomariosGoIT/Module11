@@ -113,59 +113,74 @@ const template = Handlebars.compile(source);
 
 
 
-form.addEventListener('submit', handleFormSubmit)
 
 
 
-function handleFormSubmit(evt) {
-    evt.preventDefault();
-    let content = [];
-    const filter = {
-        size: [],
-        color: [],
-        release_date: []
+class Filter {
+    constructor(laptops, inputs, gallery) {
+        this.laptops = laptops;
+        this.inputs = inputs;
+        this.gallery = gallery;        
     }
 
-    inputs.forEach(({
-        name,
-        value,
-        checked
-    }) => {
-        checked ? filter[name].push(value) : filter;
-    })
+    setFilter() {
+        let content = [];
 
-    content = laptops.reduce((acc, value) => {
-        const result = testResult(value, filter);
-        if (result.valid) {
-            acc.push(value);
-        }
-        return acc
-    }, [])
-    return templete(content, filter);
-}
+        const filter = {
+            size: [],
+            color: [],
+            release_date: []
+        };
 
+        this.inputs.forEach(({
+            name,
+            value,
+            checked
+        }) => {
+            checked ? filter[name].push(value) : filter;
+        })
 
-function testResult(val, filt) {
-    const result = Object.keys(filt).reduce((acc, value) => {
-        if (filt[value].length > 0) {
-            acc[value] = filt[value].includes(val[value].toString());
-
-        }
-        return acc;
-    }, {})
-    const valid = Object.values(result).every(value => value);
-    return {
-        result,
-        valid
+        content = this.laptops.reduce((acc, laptop) => {
+            const result = this.isValid(laptop, filter);
+            if (result) {
+                acc.push(laptop);
+            }
+            return acc
+        }, [])
+        return this.templete(content);
     };
+
+    isValid(value, filter) {
+        const result = Object.keys(filter).reduce((acc, name) => {
+            if (filter[name].length > 0) {
+                acc[name] = filter[name].includes(value[name].toString());
+
+            }
+            return acc;
+        }, {})
+
+        const valid = Object.values(result).every(value => value);
+        
+        return valid;
+    }
+
+    templete(value) {
+        const markup = value.reduce((string, laptop) => string + template(laptop), '')
+
+        this.gallery.innerHTML = markup;
+
+        this.filter = {};
+
+        return;
+    }
+
 }
 
+const myFilter = new Filter(laptops, inputs, gallery)
 
-function templete(obj, filter) {
-    const markup = obj.reduce((string, laptop) => string + template(laptop), '')
+form.addEventListener('submit', handleFormSubmit)
 
-    gallery.innerHTML = markup;
-
-    filter = {};
-    return;
+function handleFormSubmit (evt) {
+    evt.preventDefault();
+    myFilter.setFilter();
 }
