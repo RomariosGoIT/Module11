@@ -116,7 +116,6 @@ gallery.innerHTML = markup;
 
 
 
-
 class Filter {
     constructor(laptops, inputs, gallery) {
         this.laptops = laptops;
