@@ -110,7 +110,8 @@ const form = document.querySelector('.js-form');
 const inputs = Array.from(form.querySelectorAll('input'));
 const source = document.querySelector('#goods').innerHTML.trim();
 const template = Handlebars.compile(source);
-
+const markup = laptops.reduce((string, laptop) => string + template(laptop), '')
+gallery.innerHTML = markup;
 
 
 
